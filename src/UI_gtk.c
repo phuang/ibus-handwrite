@@ -245,3 +245,8 @@ void UI_cancelui(IBusHandwriteEngine* engine)
 		gtk_widget_destroy(engine->drawpanel);
 	engine->drawpanel = NULL;
 }
+
+void UI_update(IBusHandwriteEngine* engine)
+{
+	gdk_window_invalidate_rect(handwrite->drawpanel->window,0,0);
+}

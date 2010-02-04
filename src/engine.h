@@ -3,7 +3,11 @@
 #define __ENGINE_H__
 
 #include <ibus.h>
+#ifndef WITH_X11
 #include <gtk/gtk.h>
+#else
+#include <X11/Xlib.h>
+#endif
 #include "handrecog.h"
 
 #define IBUS_TYPE_HANDWRITE_ENGINE	\
@@ -22,7 +26,11 @@ struct _IBusHandwriteEngine
 	IBusEngine parent;
 
 	/* members */
+#ifdef WITH_X11
+	Window drawpanel;
+#else
 	GtkWidget * drawpanel;
+#endif
 	GdkPoint lastpoint;
 	guint mouse_state;
 	IbusHandwriteRecog * engine;

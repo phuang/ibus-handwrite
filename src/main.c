@@ -20,7 +20,11 @@ static IBusFactory *factory = NULL;
 
 static void ibus_disconnected_cb(IBusBus *bus, gpointer user_data)
 {
+#ifndef WITH_X11
 	gtk_main_quit();
+#else
+	g_main_loop_quit((GMainLoop*)user_data);
+#endif
 }
 
 char tablefile[1024]=  TABLEFILE ;
@@ -92,11 +96,18 @@ static void init_outside(const char * iconfile, const char *exefile)
 
 int main(int argc, char* argv[])
 {
+#ifndef WITH_X11
 	gtk_init(&argc, &argv);
+#else
+//	g_main_loop_quit((GMainLoop*)user_data);
+#endif
+
 	ibus_init();
 	ParseParameters(&argc, &argv, paramters);
 	setlocale(LC_ALL, "");
+#ifndef WITH_X11
 	gtk_set_locale();
+#endif
 	textdomain(GETTEXT_PACKAGE);
 #ifdef DEBUG
 	bindtextdomain(GETTEXT_PACKAGE, "/tmp/usr/share/locale");
@@ -117,6 +128,6 @@ int main(int argc, char* argv[])
 	{
 		init_inside();
 	}
-	gtk_main();
+	ibus_main();
 	return 0;
 }

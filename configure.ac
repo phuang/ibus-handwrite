@@ -51,6 +51,10 @@ AC_ARG_WITH(debian,[AC_HELP_STRING([--with-debian],[enable debian specific build
 				[AM_CONDITIONAL([WITH_DEBIAN],true)],
 				[AM_CONDITIONAL([WITH_DEBIAN],false)])
 				
+AC_ARG_WITH(gtk,[AC_HELP_STRING([--without-gtk],[use X11 instead of gtk])],
+				[AM_CONDITIONAL([WITH_GTK],false)],
+				[AM_CONDITIONAL([WITH_GTK],true)])
+				
 # check ibus
 PKG_CHECK_MODULES(IBUS, [
     ibus-1.0 >= 1.2

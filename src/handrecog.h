@@ -9,7 +9,17 @@
 #define HANDRECOG_C_
 
 #include <glib.h>
-#include <gdk/gdk.h>
+#include <glib-object.h>
+
+#ifndef WITH_X11
+#include <gtk/gtk.h>
+#else
+typedef struct _GdkPoint
+{
+  gint x;
+  gint y;
+}GdkPoint;
+#endif
 
 typedef struct _LineStroke LineStroke;
 typedef struct _MatchedChar MatchedChar;

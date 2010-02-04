@@ -101,11 +101,8 @@ static void ibus_handwrite_engine_enable(IBusHandwriteEngine *engine)
 
 static void ibus_handwrite_engine_disable(IBusHandwriteEngine *engine)
 {
-	UI_cancelui(engine);
 	// 撤销绘图窗口，销毁点列表
-	if (engine->drawpanel)
-		gtk_widget_destroy(engine->drawpanel);
-	engine->drawpanel = NULL;
+	UI_cancelui(engine);
 	g_free(engine->currentstroke.points);
 	engine->currentstroke.points = NULL;
 }
@@ -162,7 +159,7 @@ static gboolean ibus_handwrite_engine_process_key_event(IBusEngine *engine,
 		return FALSE;
 
 
-	gdk_window_invalidate_rect(handwrite->drawpanel->window,0,0);
+	UI_update(handwrite);
 
 	switch (keyval)
 	{
